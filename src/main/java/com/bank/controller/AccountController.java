@@ -8,6 +8,7 @@ import java.util.Map;
 //import javax.swing.text.DateFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bank.dto.AccountDto;
+import com.bank.entities.Account;
 import com.bank.service.AccountServiceImpl;
 
 @RestController
@@ -77,6 +79,13 @@ public class AccountController {
 	@GetMapping("/startswith")
 	public ResponseEntity<List<AccountDto>> getAllAccountsStartsWith(@RequestParam String prefix){
 		return new ResponseEntity<List<AccountDto>>(accountServiceImpl.getAllAccountsStartingWith(prefix),HttpStatus.OK);
+//		http://localhost:8080/accounts/startswith?prefix=Bh
 	}
+	
+	@GetMapping("/Paging")
+	public Page<Account> getAccounts(@RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+return accountServiceImpl.getAllAccountPaging(page, size);
+}
 	
 }

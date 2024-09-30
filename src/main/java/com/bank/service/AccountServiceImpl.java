@@ -1,12 +1,14 @@
 package com.bank.service;
 
+//import java.awt.print.Pageable;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.bank.dto.AccountDto;
@@ -93,6 +95,17 @@ public class AccountServiceImpl implements AccountService{
 			throw new RuntimeException("Account Does not exist");
 		}
 	}
-
+	
+	public Page<Account> getAllAccountPaging(int page, int size){
+		
+		Pageable pageable=PageRequest.of(page, size);
+		Page<Account> accountPage =accountRepository.findAll(pageable);
+//		return accountPage.stream().map((account)->AccountMapper.maptoAccountDto(account)).collect(Collectors.toList());
+//		return accountRepository.findAll(pageable);
+//		return (Page<AccountDto>) accountPage.stream()
+//                .map(AccountMapper::maptoAccountDto)
+//                .collect(Collectors.toList());
+		return accountRepository.findAll(pageable);
+	}
 
 }
