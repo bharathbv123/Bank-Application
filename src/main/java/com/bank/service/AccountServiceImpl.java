@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.bank.dto.AccountDto;
+import com.bank.dto.AccountResponse;
 import com.bank.entities.Account;
 import com.bank.mapper.AccountMapper;
 import com.bank.repositories.AccountRepository;
@@ -96,16 +97,26 @@ public class AccountServiceImpl implements AccountService{
 		}
 	}
 	
-	public Page<Account> getAllAccountPaging(int page, int size){
+	public AccountResponse getAllAccountPaging(int page, int size){
 		
-		Pageable pageable=PageRequest.of(page, size);
-		Page<Account> accountPage =accountRepository.findAll(pageable);
-//		return accountPage.stream().map((account)->AccountMapper.maptoAccountDto(account)).collect(Collectors.toList());
+//		Pageable pageable=PageRequest.of(page, size);
+//		Page<Account> accountPage =accountRepository.findAll(pageable);
+
 //		return accountRepository.findAll(pageable);
-//		return (Page<AccountDto>) accountPage.stream()
-//                .map(AccountMapper::maptoAccountDto)
-//                .collect(Collectors.toList());
-		return accountRepository.findAll(pageable);
+/*		Page<Account> accountPage = accountRepository.findAll(pageable);
+        return accountPage.stream()
+                          .map(AccountMapper::maptoAccountDto)
+                          .collect(Collectors.toList());
+  */      
+		Pageable pageable = PageRequest.of(page, size);
+        Page<Account> accountPage = accountRepository.findAll(pageable);
+
+        List<AccountDto> accountDtos = accountPage.stream()
+                                                  .map(AccountMapper::maptoAccountDto)
+                                                  .collect(Collectors.toList());
+
+        return new AccountResponse(accountDtos);
+        
 	}
 
 }

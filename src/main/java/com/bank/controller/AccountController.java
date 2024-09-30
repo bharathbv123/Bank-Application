@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bank.dto.AccountDto;
+import com.bank.dto.AccountResponse;
 import com.bank.entities.Account;
 import com.bank.service.AccountServiceImpl;
 
@@ -83,9 +84,14 @@ public class AccountController {
 	}
 	
 	@GetMapping("/Paging")
-	public Page<Account> getAccounts(@RequestParam(defaultValue = "0") int page,
+	/*
+	public Page<AccountDto> getAccounts(@RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
-return accountServiceImpl.getAllAccountPaging(page, size);
+return accountServiceImpl.getAllAccountPaging(page, size); */
+
+	    public AccountResponse getAccounts(@RequestParam(defaultValue = "0") int page,
+	                                       @RequestParam(defaultValue = "10") int size) {
+	        return accountServiceImpl.getAllAccountPaging(page, size);
 }
 	
 }

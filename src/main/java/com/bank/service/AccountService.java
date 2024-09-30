@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.bank.dto.AccountDto;
+import com.bank.dto.AccountResponse;
 import com.bank.entities.Account;
 
 
@@ -21,6 +22,7 @@ public interface AccountService {
 	void deleteAccount(Long id);
 	List<AccountDto> getAllAccountsBetweenDateRange(LocalDate startDate, LocalDate endDate);
 	List<AccountDto> getAllAccountsStartingWith(String prefix);
+	public AccountResponse getAllAccountPaging(int page, int size);
 	
 
 }
